@@ -8,6 +8,8 @@ version: '2.4'
 services:
   db:
     image: datajoint/mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD = ${MYSQL_ROOT_PASSWORD}
     ports:
       - "3307:3306"
     volumes:
