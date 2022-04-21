@@ -8,9 +8,6 @@ version: '2.4'
 services:
   db:
     image: datajoint/mysql:8.0
-    environment:
-      - "${MYSQL_ROOT_PASSWORD}"
-      # - DATAJOINT_DATABASE_CONFIG_MONITOR=FALSE # Enable MySQL config monitoring, auto reload
     ports:
       - "3307:3306"
     volumes:
