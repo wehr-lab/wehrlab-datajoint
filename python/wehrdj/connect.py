@@ -12,11 +12,11 @@ def connect(host=None, user=None, password=None, file=Path.home()/'.djcredential
 		password = cfg['password']
 	else:
 		if host is None:
-			host = input('host ip and port')
+			host = input('host ip and port: ')
 		if user is None:
-			user = input('username')
+			user = input('username: ')
 		if password is None:
-			password = input('password')
+			password = input('password: ')
 
 		if not file.exists():
 			with open(file, 'w') as cfgfile:

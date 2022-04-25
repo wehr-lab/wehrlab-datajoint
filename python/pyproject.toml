@@ -14,6 +14,7 @@ datajoint = "^0.13.4"
 element-lab = "^0.1.0-beta.0"
 element-animal = "^0.1.0-beta.0"
 element-session = "^0.1.0-beta.0"
+pandas = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 
