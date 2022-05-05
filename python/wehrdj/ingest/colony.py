@@ -44,7 +44,7 @@ def load_mouse_db(path:Path) -> MouseDB:
     # reformat date columns to strings
     df['subject_birth'] = col_to_datetime(df['subject_birth'])
     df['death_date'] = col_to_datetime(df['death_date'])
-
+    df['subject'].str.zfill(4)
     return df
 
 
