@@ -24,7 +24,7 @@ class SchemaInterface:
 
     @property
     @abstractmethod
-    def schema(self) -> UserTable:
+    def schema(self) -> 'UserTable':
         """
         The schema that this class models.
 
@@ -61,7 +61,7 @@ class SchemaInterface:
             bool: ``True`` if they have
         """
 
-    def insert(self, conn: Connection, **kwargs):
+    def insert(self, conn: 'Connection', **kwargs):
         """
         Insert this schema entry into the table
 
