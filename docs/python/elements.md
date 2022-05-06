@@ -1,5 +1,6 @@
 # Elements
 
-```{automodule} wehrdj.elements
-:members:
+```{eval-rst}
+.. automodule:: wehrdj.elements
+   :members:
 ```

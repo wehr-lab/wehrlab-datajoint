@@ -1,5 +1,6 @@
 # Colony
 
-```{automodule} wehrdj.ingest.colony
-:members:
+```{eval-rst}
+.. automodule:: wehrdj.ingest.colony
+   :members:
 ```

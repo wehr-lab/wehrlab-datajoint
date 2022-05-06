@@ -1,5 +1,5 @@
 # Session
 
-```{automodule} wehrdj.ingest.session
-:members:
-```
+```{eval-rst}
+.. automodule:: wehrdj.ingest.session
+   :members:

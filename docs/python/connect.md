@@ -1,5 +1,6 @@
 # Connect
 
-```{automodule} wehrdj.connect
-:members:
+```{eval-rst}
+.. automodule:: wehrdj.connect
+   :members:
 ```

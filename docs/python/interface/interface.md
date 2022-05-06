@@ -1,5 +1,6 @@
 # Interface Classes
 
-```{automodule} wehrdj.interface.interface
-:members:
+```{eval-rst}
+.. automodule:: wehrdj.interface.interface
+   :members:
 ```

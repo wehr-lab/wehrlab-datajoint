@@ -1,5 +1,6 @@
 # Exceptions
 
-```{automodule} wehrdj.exceptions
-:members:
+```{eval-rst}
+.. automodule:: wehrdj.exceptions
+   :members:
 ```

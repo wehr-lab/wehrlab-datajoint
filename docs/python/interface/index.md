@@ -1,7 +1,8 @@
 # Interface
 
-```{automodule} wehrdj.interface
-:members:
+```{eval-rst}
+.. automodule:: wehrdj.interface
+   :members:
 ```
 
 ```{toctree}

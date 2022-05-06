@@ -1,5 +1,5 @@
 # Utils
 
-```{automodule} wehrdj.ingest.utils
-:members:
-```
+```{eval-rst}
+.. automodule:: wehrdj.ingest.utils
+   :members:

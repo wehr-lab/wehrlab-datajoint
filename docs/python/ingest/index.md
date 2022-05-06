@@ -1,7 +1,8 @@
 # Ingest
 
-```{automodule} wehrdj.ingest
-:members:
+```{eval-rst}
+.. automodule:: wehrdj.ingest
+   :members:
 ```
 
 ```{toctree}
