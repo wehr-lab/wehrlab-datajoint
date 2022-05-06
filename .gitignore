@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 tmp_cfg.json
+.idea
