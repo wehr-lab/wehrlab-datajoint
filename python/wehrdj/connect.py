@@ -1,8 +1,32 @@
 import datajoint as dj
 import json
 from pathlib import Path
+import typing
+if typing.TYPE_CHECKING:
+	from datajoint.connection import Connection
 
-def connect(host=None, user=None, password=None, file=Path.home()/'.djcredentials.json'):
+def connect(host=None, user=None, password=None,
+			file=Path.home()/'.djcredentials.json', **kwargs) -> 'Connection':
+	"""
+	Connect to datajoint database.
+
+	Wrapper around :func:`datajoint.conn`, but loads credentials from an (unencrypted) file.
+
+	A bit less implicit than using environment variables, and less manual than typing them
+	in every time.
+
+	Please for the love of god do not commit any passwords to a git repo ever.
+
+	Args:
+		host (str): IP Address
+		user (str): Username ( typically "root" by default )
+		password (str): uh Password
+		file (:class:`pathlib.Path`): file to load/save credentials to
+		**kwargs: passed to dj.conn
+
+	Returns:
+		:class:`datajoint.connection.Connection`
+	"""
 
 	file = Path(file)
 	if file.exists() and all(field is None for field in [host, user, password]):
@@ -27,4 +51,4 @@ def connect(host=None, user=None, password=None, file=Path.home()/'.djcredential
 	dj.config['database.user'] = user
 	dj.config['database.password'] = password
 
-	dj.conn()
+	return dj.conn(**kwargs)

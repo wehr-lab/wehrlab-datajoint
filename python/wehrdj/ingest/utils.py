@@ -1,10 +1,16 @@
+"""
+Utility functions for ingestion! what else!
+"""
+
 import warnings
 
 import pandas as pd
 
 
 def col_to_datetime(column:pd.Series) -> pd.Series:
-    """Date column with improperly padded m/d/y formatting"""
+    """
+    Fix date column with improperly padded m/d/y formatting
+    """
     # remove any nonnumeric, nonslash characters
     column = column.str.replace(r'[^\d/]', '', regex=True)
     split_date = column.str.split('/', expand=True).rename(columns={0: 'month', 1: "day", 2: "year"})

@@ -1,3 +1,12 @@
+"""
+Methods to fill the ``Session`` schema from ``element_schema``.
+
+Two examples are given: a functional example and an object-oriented example.
+
+The object-oriented example makes use of :mod:`wehrdj.interface.interface`, which seems
+like a better way to do it to me than having a zillion disconnected functions.
+"""
+
 import re
 from pathlib import Path
 from datetime import datetime
@@ -76,6 +85,18 @@ class Session(SchemaInterface):
     schema = Session_
 
     def __init__(self, path:Path, pattern=SESSION_PATTERN):
+        """
+        Use :func:`.extract_session` to populate attributes to be inserted
+        into the datajoint database.
+
+        See :class:`~wehrdj.interface.interface.SchemaInterface` for details of intended
+        usage.
+
+        Args:
+            path (:class:`pathlib.Path`): Directory of session data
+            pattern (:class:`re.Pattern`):  Regular Expression pattern that parses datetime and subject from path names
+
+        """
         super(Session, self).__init__()
 
         self.path = Path(path)

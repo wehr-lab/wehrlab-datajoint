@@ -34,7 +34,8 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.intersphinx',
-    'myst_parser'
+    'myst_parser',
+    'sphinx.ext.todo'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,9 +52,10 @@ autodoc_default_options = {
 }
 
 intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
    'scipy': ('https://docs.scipy.org/doc/scipy/', None),
    'numpy': ('https://numpy.org/doc/stable/', None),
-   'datajoint': ('https://docs.datajoint.org/python/', None),
+   'datajoint': ('https://docs-api.datajoint.org/', None),
 }
 
 

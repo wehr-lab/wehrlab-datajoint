@@ -17,6 +17,19 @@ if typing.TYPE_CHECKING:
     from datajoint.connection import Connection
 
 class SchemaInterface:
+    """
+    Metaclass for making interfaces from existing data structures
+    to datajoint schema.
+
+    To use:
+
+    * Assign the relevant schema as a ``schema`` class attribute
+    * Write code to either assign values from your particular data structure
+      as attributes or properties with the same names as the fields in the database
+    * Connect and hopefully it will be able to insert your row!
+
+    For an example, see :class:`~wehrdj.ingest.session.Session`
+    """
 
     _fields: Dict[str, Any] = dict()
     """
@@ -50,6 +63,25 @@ class SchemaInterface:
     def table(self) -> Table:
         """
         The abstract representation of the datajoint model in the :attr:`~datajoint.Schema.definition`
+
+        eg. for session::
+
+            Table(
+              name='Session',
+              tier='Manual',
+              comment=None,
+              keys=[
+                Dependency(dependency='Subject'),
+                Attribute(
+                  name='session_datetime',
+                  datatype=DJ_Type(datatype='datetime', args=3, unsigned=False),
+                  comment='',
+                  default=None
+                )
+              ],
+              attributes=[]
+            )
+
 
         Returns:
             :class:`~datajoint_babel.model.table.Table`
@@ -103,12 +135,12 @@ class SchemaInterface:
         """
         return all([field in self.__dict__.keys() for field in self.field_names])
 
-    def insert(self, conn: 'Connection', **kwargs):
+    def insert(self, **kwargs):
         """
-        Insert this schema entry into the table
+        Insert this schema entry into the table. You must have already
+        called :func:`wehrcj.connect` or else datajoint will prompt you.
 
         Args:
-            conn (:class:`datajoint.connection.Connection`): Active connection to a database.
             **kwargs: passed on to :meth:`~datajoint.user_tables.UserTable.insert`
 
         Raises:

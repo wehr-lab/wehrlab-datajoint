@@ -1,5 +1,10 @@
 """
 Ingest the colony database into datajoint
+
+.. todo::
+
+    Still need to add the rest of the genotyping and litter information.
+
 """
 import pandas as pd
 from pathlib import Path
@@ -15,6 +20,9 @@ MOUSE_DB_MAP = {
     "Date Sac'd": "death_date",
     'Protocol': 'protocol'
 }
+"""
+Mapping between values in our database and names in the datajoint model
+"""
 
 class MouseDB(pd.DataFrame):
     """Trivial subtype of dataframe to indicate this is a mouse db dataframe"""
@@ -23,6 +31,12 @@ class MouseDB(pd.DataFrame):
 def load_mouse_db(path:Path) -> MouseDB:
     """
     Load the mouse database from a .csv export of the "Mice" sheet from the colony database
+
+    Args:
+        path (:class:`pathlib.Path`): The path of the csv exported from google sheets
+
+    Returns:
+        :class:`.MouseDB`
     """
     df = MouseDB(pd.read_csv(path))
     # rename columns
@@ -36,6 +50,15 @@ def load_mouse_db(path:Path) -> MouseDB:
 
 
 def insert_subjects(mousedb:MouseDB):
+    """
+    Insert the loaded subject database into the datajoint database.
+
+    :func:`wehrdj.connect` must have already been called.
+
+    Args:
+        mousedb (:class:`.MouseDB`): the loaded mouse database
+
+    """
     mousedb = mousedb[['subject', 'sex', 'subject_birth_date']]
     # filter nans
     mousedb = filter_nans(mousedb)
