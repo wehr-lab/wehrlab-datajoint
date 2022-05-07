@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 def connect(host=None, user=None, password=None, file=Path.home()/'.djcredentials.json'):
+
 	file = Path(file)
 	if file.exists() and all(field is None for field in [host, user, password]):
 		with open(file, 'r') as cfgfile:

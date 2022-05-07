@@ -2,6 +2,8 @@ import re
 from pathlib import Path
 from datetime import datetime
 from typing import List, TypedDict
+from wehrdj.interface import SchemaInterface
+from element_session.session import Session as Session_
 
 # extract dates and ids from strings with pattern
 # 2018-06-07_16-26-19_mouse-8580
@@ -70,6 +72,18 @@ def extract_sessions(
 # session example -- object example
 # --------------------------------------------------
 
+class Session(SchemaInterface):
+    schema = Session_
+
+    def __init__(self, path:Path, pattern=SESSION_PATTERN):
+        super(Session, self).__init__()
+
+        self.path = Path(path)
+        self.pattern = pattern
+
+        sessdict = extract_session(self.path, self.pattern)
+        self.subject = sessdict['subject']
+        self.session_datetime = sessdict['session_datetime']
 
 
 
