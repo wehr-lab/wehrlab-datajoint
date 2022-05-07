@@ -17,6 +17,11 @@ from element_session.session import Session as Session_
 # extract dates and ids from strings with pattern
 # 2018-06-07_16-26-19_mouse-8580
 SESSION_PATTERN = re.compile(r'(\d{4}-[\-_0-9]*)_mouse-(\d*)')
+"""
+Regex pattern to parse directory names of the format:
+
+``2018-06-07_16-26-19_mouse-8580``
+"""
 
 # --------------------------------------------------
 # Session extraction -- functional example
