@@ -31,9 +31,11 @@ dj.createSchema
 %note that "database" refers to the schema
 
 %%
-s=subject.getSchema()
-s.v
-s.v.Subject
+sub=subject.getSchema()
+sub.v
+sub.v.Subject
+
+sub.v.Subject & 'subject=0877'
 
 %%
 cd('/home/lab/git/wehrlab-datajoint/matlab')

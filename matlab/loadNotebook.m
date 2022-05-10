@@ -3,6 +3,6 @@ function nb = loadNotebook(BonsaiDir)
 % and return as structure nb
 
 
-EphysDir=dir('2022*').name;
-s=load(fullfile(EphysDir, 'notebook.mat'));
+EphysDir=dir(fullfile(BonsaiDir,'2022*')).name;
+s=load(fullfile(BonsaiDir, EphysDir, 'notebook.mat'));
 nb=s.nb;

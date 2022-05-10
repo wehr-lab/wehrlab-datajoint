@@ -716,6 +716,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "pygraphviz"
+version = "1.9"
+description = "Python interface to Graphviz"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
 name = "pymysql"
 version = "1.0.2"
 description = "Pure Python MySQL Driver"
@@ -1047,7 +1055,7 @@ docs = ["Sphinx", "furo", "myst-parser"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "896dd1a83283d28dd882a6682e0283db5aa234a738ff04bebedb70ddd7e93ed7"
+content-hash = "f4906c858d1b5ac9a379655da982735a562c169a05d3af7ff0a6ebad4da72ae9"
 
 [metadata.files]
 alabaster = [
@@ -1566,6 +1574,9 @@ pydot = [
 pygments = [
     {file = "Pygments-2.12.0-py3-none-any.whl", hash = "sha256:dc9c10fb40944260f6ed4c688ece0cd2048414940f1cea51b8b226318411c519"},
     {file = "Pygments-2.12.0.tar.gz", hash = "sha256:5eb116118f9612ff1ee89ac96437bb6b49e8f04d8a13b514ba26f620208e26eb"},
+]
+pygraphviz = [
+    {file = "pygraphviz-1.9.zip", hash = "sha256:fa18f7c6cea28341a4e466ed0cf05682b0a68288afe8dd7c9426782f7c1ae01c"},
 ]
 pymysql = [
     {file = "PyMySQL-1.0.2-py3-none-any.whl", hash = "sha256:41fc3a0c5013d5f039639442321185532e3e2c8924687abe6537de157d403641"},

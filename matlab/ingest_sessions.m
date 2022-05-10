@@ -4,7 +4,7 @@ d=dir(rootdir);
 k=0;
 for i=1:length(d)
     if strfind(d(i).name, '2022')
-        %fprintf('%s', d(i).name)
+%         fprintf('\n%s', d(i).name)
         nb=loadNotebook(fullfile(rootdir, d(i).name));
         C=strsplit(d(i).name, '_mouse');
         session_datetime=C{1};
