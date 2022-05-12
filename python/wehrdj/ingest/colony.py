@@ -24,6 +24,7 @@ MOUSE_DB_MAP = {
 Mapping between values in our database and names in the datajoint model
 """
 
+
 class MouseDB(pd.DataFrame):
     """Trivial subtype of dataframe to indicate this is a mouse db dataframe"""
 
@@ -46,7 +47,6 @@ def load_mouse_db(path:Path) -> MouseDB:
     df['death_date'] = col_to_datetime(df['death_date'])
     df['subject'].str.zfill(4)
     return df
-
 
 
 def insert_subjects(mousedb:MouseDB):

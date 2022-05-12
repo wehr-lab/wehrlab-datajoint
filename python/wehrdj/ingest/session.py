@@ -27,10 +27,12 @@ Regex pattern to parse directory names of the format:
 # Session extraction -- functional example
 # --------------------------------------------------
 
+
 # container of individual session entries
 class SessionDict(TypedDict):
     subject: str
     session_datetime: datetime
+
 
 def extract_session(
         path:Path,
@@ -59,6 +61,7 @@ def extract_session(
         session_datetime=session_dt
     )
 
+
 def extract_sessions(
         basedir:Path, 
         pattern:re.Pattern=SESSION_PATTERN
@@ -85,6 +88,7 @@ def extract_sessions(
 # --------------------------------------------------
 # session example -- object example
 # --------------------------------------------------
+
 
 class Session(SchemaInterface):
     schema = Session_

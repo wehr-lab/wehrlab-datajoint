@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from datajoint.user_tables import UserTable
     from datajoint.connection import Connection
 
+
 class SchemaInterface:
     """
     Metaclass for making interfaces from existing data structures
@@ -90,7 +91,6 @@ class SchemaInterface:
             self._table = Table.from_definition(name=self.name, definition=self.schema.definition)
         return self._table
 
-
     @property
     def field_names(self) -> typing.List[str]:
         """
@@ -124,7 +124,6 @@ class SchemaInterface:
         return {
             k:getattr(self, k) for k in self.field_names
         }
-
 
     def validate(self) -> bool:
         """

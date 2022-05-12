@@ -16,30 +16,31 @@ from element_animal import subject, genotyping
 from element_animal.subject import Subject
 from element_lab.lab import Source, Lab, Protocol, User, Location, Project
 from element_session import session
-#from element_array_ephys import ephys_chronic
+
+
+# from element_array_ephys import ephys_chronic
 
 
 def activate():
-	"""
-	Call the activation functions from each of the imported elements.
-	Must have already called :func:`wehrdj.connect`
+    """
+    Call the activation functions from each of the imported elements.
+    Must have already called :func:`wehrdj.connect`
 
-	Currently:
+    Currently:
 
-	* element_lab.lab
-	* element_animal.subject
-	* element_animal.genotyping
-	* element_session.session
+    * element_lab.lab
+    * element_animal.subject
+    * element_animal.genotyping
+    * element_session.session
 
-	It uses ``wehrdj.elements`` as the linking module, which I believe
-	is necessary because it looks for a particular context when instantiating
-	the schema? Not really sure on that one.
+    It uses ``wehrdj.elements`` as the linking module, which I believe
+    is necessary because it looks for a particular context when instantiating
+    the schema? Not really sure on that one.
 
 
-	"""
-	lab.activate('lab')
-	subject.activate('subject', linking_module='wehrdj.elements')
-	genotyping.activate('genotyping', 'subject', linking_module='wehrdj.elements')
-	session.activate('session', linking_module='wehrdj.elements')
-	#ephys_chronic.activate('ephys_chronic', linking_module='wehrdj.elements')
-
+    """
+    lab.activate('lab')
+    subject.activate('subject', linking_module='wehrdj.elements')
+    genotyping.activate('genotyping', 'subject', linking_module='wehrdj.elements')
+    session.activate('session', linking_module='wehrdj.elements')
+# ephys_chronic.activate('ephys_chronic', linking_module='wehrdj.elements')
