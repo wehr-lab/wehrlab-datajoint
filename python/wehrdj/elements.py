@@ -35,7 +35,7 @@ from element_deeplabcut import train, model
 import pathlib
 # Installed all using pip install --force-reinstall --no-deps git+https://github.com/datajoint/element-lab.git@main
 
-wehrdj.connect()  # Wrapper for dj.connect(), can be replaced with the normal DJ function if needed
+wehrdj.connect()  # Wrapper for dj.conn(), can be replaced with the normal DJ function if needed
 
 dj.config["custom"] = {"database.prefix": "wehr_"}
 db_prefix = dj.config['custom'].get('database.prefix', '')
@@ -48,7 +48,9 @@ __all__ = ['genotyping', 'session', 'Subject', 'Source', 'Lab', 'Protocol', 'Use
 
 Experimenter = lab.User
 
-# Defining classes and functions to add to base elements/those needed to load
+# linking_module = "wehrdj.elements"
+linking_module = __name__
+# Defining classes and fuctions to add to base elements/those needed to load
 # in specific elements
 
 
@@ -98,12 +100,12 @@ def get_dlc_processed_data_dir() -> str:
 
 # Activating all elements so they can be called into other modules
 lab.activate(db_prefix + "lab")
-subject.activate(db_prefix + "subject", linking_module=__name__)
-session.activate(db_prefix + "session", linking_module=__name__)
-genotyping.activate(db_prefix + "genotyping", db_prefix + "subject", linking_module=__name__)
-ephys.activate(db_prefix + "ephys", db_prefix + "probe", linking_module=__name__)
-train.activate(db_prefix + "train", linking_module=__name__)
-model.activate(db_prefix + "model", linking_module=__name__)
+subject.activate(db_prefix + "subject", linking_module=linking_module)
+session.activate(db_prefix + "session", linking_module=linking_module)
+genotyping.activate(db_prefix + "genotyping", db_prefix + "subject", linking_module=linking_module)
+ephys.activate(db_prefix + "ephys", db_prefix + "probe", linking_module=linking_module)
+train.activate(db_prefix + "train", linking_module=linking_module)
+model.activate(db_prefix + "model", linking_module=linking_module)
 
 # Combined Schema object for diagramming with all neighbors above and below
 total_schema = (dj.Diagram(lab) + dj.Diagram(genotyping) + dj.Diagram(session) + dj.Diagram(ephys)
