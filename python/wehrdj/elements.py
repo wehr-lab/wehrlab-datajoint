@@ -48,8 +48,8 @@ __all__ = ['genotyping', 'session', 'Subject', 'Source', 'Lab', 'Protocol', 'Use
 
 Experimenter = lab.User
 
-# linking_module = "wehrdj.elements"
-linking_module = __name__
+linking_module = "wehrdj.elements"
+# linking_module = __name__
 # Defining classes and fuctions to add to base elements/those needed to load
 # in specific elements
 
@@ -111,30 +111,31 @@ model.activate(db_prefix + "model", linking_module=linking_module)
 total_schema = (dj.Diagram(lab) + dj.Diagram(genotyping) + dj.Diagram(session) + dj.Diagram(ephys)
                 + dj.Diagram(train) + dj.Diagram(model) + 1 - 1 + 1 - 1)
 
+
 # Currently it looks like it's better if these are not activated in a function as they can just be directly imported
 # from this module instead of the respective datajoint elements modules
-# def activate():
-#     """
-#     Call the activation functions from each of the imported elements.
-#     Must have already called :func:`wehrdj.connect`
-#
-#     Currently:
-#
-#     * element_lab.lab
-#     * element_animal.subject
-#     * element_animal.genotyping
-#     * element_session.session
-#
-#     It uses ``wehrdj.elements`` as the linking module, which I believe
-#     is necessary because it looks for a particular context when instantiating
-#     the schema? Not really sure on that one.
-#
-#
-#     """
-#     lab.activate('lab')
-#     subject.activate('subject', linking_module='wehrdj.elements')
-#     genotyping.activate('genotyping', 'subject', linking_module='wehrdj.elements')
-#     session.activate('session', linking_module='wehrdj.elements')
-#     #ephys_chronic.activate('ephys_chronic', linking_module='wehrdj.elements')
-#     #model.activate("model", linking_module='wherdj.elements', )
+def activate():
+    """
+    Call the activation functions from each of the imported elements.
+    Must have already called :func:`wehrdj.connect`
+
+    Currently:
+
+    * element_lab.lab
+    * element_animal.subject
+    * element_animal.genotyping
+    * element_session.session
+
+    It uses ``wehrdj.elements`` as the linking module, which I believe
+    is necessary because it looks for a particular context when instantiating
+    the schema? Not really sure on that one.
+
+
+    """
+    lab.activate('lab')
+    subject.activate('subject', linking_module='wehrdj.elements')
+    genotyping.activate('genotyping', 'subject', linking_module='wehrdj.elements')
+    session.activate('session', linking_module='wehrdj.elements')
+    #ephys_chronic.activate('ephys_chronic', linking_module='wehrdj.elements')
+    #model.activate("model", linking_module='wherdj.elements', )
 #
