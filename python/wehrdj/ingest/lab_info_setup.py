@@ -2,7 +2,8 @@
 File for injecting the basic lab info into our Wehr DJ model. Also allows
 testing of the import system for our schema.
 """
-
+#TODO: This abomination of a file highlights why we need to be able to scrape
+# the user data from somewhere. Python is not great for manually putting it all in.
 import datajoint as dj
 import pandas as pd
 from element_lab import lab
