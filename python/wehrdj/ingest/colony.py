@@ -4,7 +4,15 @@ Ingest the colony database into datajoint
 .. todo::
 
     Still need to add the rest of the genotyping and litter information.
-    Remove Arch-GFP "II" that has trailing space after it in spreadsheet
+    How to deal with/classify these for zygosity:
+    ['not genotyped',
+       'no genotyping data', 'waiting on 362-00', 'check 336-00', 'hom?',
+       'confirm 275-00', 'check males in same litter',
+       'supposed positive', 'no genotyping done', 'check litter 228-00',
+       'check litter 229-00', 'Not clipped...', '++', 'pos?', '?',
+       'retest', 'check 356-01', 'het?', 'not genoryped',
+       'need genotyped', ' +', '          +?', '     +', 'WT', ' + ',
+       ' - ', '?+', '12/18/2015', '+ ']
 
 """
 import pandas as pd
@@ -23,6 +31,7 @@ MOUSE_DB_MAP = {
     "Date Sac'd": "death_date",
     'Protocol': 'protocol',
     "+": "Present",
+    "++": "Present",
     "-": "Absent",
     "hom": "Homozygous",
     "het": "Heterozygous",
@@ -68,8 +77,8 @@ def load_mouse_db(path:Path) -> MouseDB:
     df['death_date'] = col_to_datetime(df['death_date'])
     df['subject'].str.zfill(4)
     # Remove stars from Allele names
-    df["Gene 1"] = df["Gene 1"].str.rstrip(" *")
-    df["Gene 2"] = df["Gene 2"].str.rstrip(" *")
+    df["Gene 1"] = df["Gene 1"].str.strip(" *")
+    df["Gene 2"] = df["Gene 2"].str.strip(" *")
     # Remap Allele names
     df[["Result", "Result.1", "cdh23"]] = df[["Result", "Result.1", "cdh23"]].replace(MOUSE_DB_MAP)
 
@@ -133,16 +142,19 @@ def insert_subject_zygosity(mousedb:MouseDB):
     cdh23_df = filter_nans(cdh23_df)
     stacked_frame = pd.concat([allele_df1, allele_df2, cdh23_df], axis=0)
     stacked_frame = stacked_frame[stacked_frame["subject"].str.contains("-") == False]
-    # Drop all alleles we have no information for
-    stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("TMF") == False]
-    stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("not") == False]
-    stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("Not") == False]
-    stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("no") == False]
-    stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("waiting") == False]
-    stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("check") == False]
-    #TODO: Remove/alter the rest of the zygosities from stacked_frame.zygosity.unique()
-    return stacked_frame
-    # alleles = stacked_frame["allele"].unique()
-    # print(alleles)
-    # subject.Allele.insert(pd.DataFrame({"allele": alleles}), skip_duplicates=True)
-    # subject.Zygosity.insert(stacked_frame, skip_duplicates=True)
+    wanted_zygosities = ["Heterozygous", "Homozygous", "Absent", "Present"]
+    # Remove excess spaces from spreadsheet and convert gene results a second time to see if we can rescue more
+    stacked_frame["zygosity"] = stacked_frame["zygosity"].str.strip().replace(MOUSE_DB_MAP)
+    # Now just only grab the genotyping results we can interpret. The rest will need to be rescued some other way
+    stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains('|'.join(wanted_zygosities), regex=True) == True]
+
+    # stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("TMF") == False]
+    # stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("not") == False]
+    # stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("Not") == False]
+    # stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("no") == False]
+    # stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("waiting") == False]
+    # stacked_frame = stacked_frame[stacked_frame["zygosity"].str.contains("check") == False]
+    # return stacked_frame  # Return statement for capturing the frame before insertion for debugging
+    alleles = stacked_frame["allele"].unique()
+    subject.Allele.insert(pd.DataFrame({"allele": alleles}), skip_duplicates=True)
+    subject.Zygosity.insert(stacked_frame, skip_duplicates=True)
