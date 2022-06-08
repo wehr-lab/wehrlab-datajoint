@@ -124,6 +124,7 @@ def insert_subject_zygosity(mousedb:MouseDB):
     MouseDB a bit to stack genes to allow for easier ingestion since DataJoint
     does not natively allow multiple genes to be associated with one mouse in one
     entry.
+    TODO: Decide whether we want to scrape data from the genotyping spreadsheet as well
 
     Args:
         mousedb (:class: `.MouseDB`): the loaded mouse database
