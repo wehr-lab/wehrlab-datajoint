@@ -1,5 +1,10 @@
-function conn = connect()
+function conn = connect
 %connect to wehrlab datajoint database
+%usage: 
+% conn = connect
+
+
+
 
 fname = '~/.djcredentials.json'; 
 fid = fopen(fname); 
@@ -13,5 +18,6 @@ setenv('DJ_PASS', djcred.password)
 
 %dj.config('databasePort', 3307)
 dj.config('databaseUse_tls', false)
+%dj.config('databaseUse_tls', true)
 dj.config
 conn=dj.conn()
