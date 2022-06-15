@@ -140,6 +140,14 @@ source_df.at[0, "source"] = "JAX"
 source_df.at[0, "source_name"] = "The Jackson Laboratory"
 source_df.at[0, "contact_details"] = "www.jax.org"
 source_df.at[0, "source_description"] = "Jackson Labs mouse respository"
+source_df.at[1, "source"] = "UO"
+source_df.at[1, "source_name"] = "University of Oregon internal acquisition"
+source_df.at[1, "contact_details"] = "https://teacs.uoregon.edu/content/teacs-contacts"
+source_df.at[1, "source_description"] = "Mouse lines acquired from other labs inside the University of Oregon"
+source_df.at[2, "source"] = "MMRRC"
+source_df.at[2, "source_name"] = "Mutant Mouse Resource & Research Centers"
+source_df.at[2, "contact_details"] = "https://www.mmrrc.org/"
+source_df.at[2, "source_description"] = "Mouse repository sponsered by the NIH"
 
 lab.Source.insert(source_df, skip_duplicates=True)
 
