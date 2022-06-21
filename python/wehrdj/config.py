@@ -6,8 +6,8 @@ that is appeneded to the system path so it isn't tracked on git
 
 import pathlib
 
-EPHYS_DATA_PATH = pathlib.PurePath("/Users/Matt/Desktop/Research/Wehr")
+EPHYS_DATA_PATH = pathlib.PurePath("/Users/Matt/Desktop/Research/Wehr/wehr_nas_mount")
 
-DLC_CONFIG_PATH = pathlib.PurePath("/Users/Matt/Desktop/Research/Wehr")
+DLC_CONFIG_PATH = pathlib.PurePath("/Users/Matt/Desktop/Research/Wehr/wehr_nas_mount")
 
 OUTPUT_SAVE_LOCATION = pathlib.PurePath("/Users/Matt/Desktop/Research/Wehr/data")

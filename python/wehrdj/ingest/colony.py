@@ -28,6 +28,7 @@ from wehrdj.elements import subject, genotyping
 
 MOUSE_DB_MAP = {
     'Unnamed: 0': 'subject',
+    'ID': 'subject',
     'Sex': 'sex',
     'DOB': 'subject_birth_date',
     "Date Sac'd": "death_date",
@@ -209,11 +210,14 @@ def insert_breeding_pairs(mouse_mating_csv_path:Path):
 
     """
     mating_db = MouseDB(pd.read_csv(mouse_mating_csv_path))
+    # Replace anything between square brackets (including the brackets), with nothing
     mating_db["Cross"] = mating_db["Cross"].str.replace('\[.+?\]', '', regex=True).str.replace('/\S+', '', regex=True)
     mating_db["Start Date"] = col_to_datetime(mating_db["Start Date"])
     ingestion_frame = mating_db[["Cross", "Start Date"]].rename(columns={"Cross": "line", "Start Date": "bp_start_date"})
-    ingestion_frame["breeding_pair"] = mating_db["F ID"] + " & " + mating_db["M ID"]
-    genotyping.BreedingPair.insert(ingestion_frame)
+    ingestion_frame["bp_description"] = mating_db["F ID"] + " & " + mating_db["M ID"]
+    ingestion_frame["breeding_pair"] = mating_db["Cage #"]
+    ingestion_frame = filter_nans(ingestion_frame)
+    genotyping.BreedingPair.insert(ingestion_frame, skip_duplicates=True)
 
 
 def insert_litters(mousedb:MouseDB):
@@ -221,13 +225,19 @@ def insert_litters(mousedb:MouseDB):
     Uses the main sheet of our colony spreadsheet to group litters and pull date
     info. There is no way to associate litter with breeding pair currently with
     the data we have recorded.
+
+    Currently not functional since I haven't decided how to resolve that the same
+    mouse lines are written in multiple different ways/some aren't in our mating
+    or line spreadsheets, and therefor have no easy method of being ingested into
+    the database for subject.Line and genotyping.BreedingPair
+
     Args:
         mousedb:
 
     """
     litter_db_summary = mousedb.groupby("Litter Number")["subject_birth_date"].describe(datetime_is_numeric=True)
     gene_db_summary = mousedb.groupby("Litter Number")[["Gene 1", "Gene 2"]].describe()
-    columns = ["line", "litter_birth_date", "num_of_pups", "litter_notes"]
+    columns = ["line", "breeding_pair", "litter_birth_date", "num_of_pups", "litter_notes"]
     insert_frame = pd.DataFrame(columns=columns)
     for position, (index, row) in enumerate(gene_db_summary.iterrows()):
         # Check to see if mouse has one or two genes of note
@@ -241,5 +251,6 @@ def insert_litters(mousedb:MouseDB):
     insert_frame["litter_birth_date"] = pd.to_datetime(litter_db_summary["mean"], format="%y/%m/%d").values
     insert_frame["num_of_pups"] = litter_db_summary["count"].astype("float32").values
     insert_frame["litter_notes"] = litter_db_summary.index
+    insert_frame["breeding_pair"] = litter_db_summary.index.str.split("-").str[0]
     insert_frame = filter_nans(insert_frame)
     genotyping.Litter.insert(insert_frame, skip_duplicates=True)
